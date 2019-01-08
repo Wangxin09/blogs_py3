@@ -1,0 +1,34 @@
+
+{% extends "article/base.html" %}
+{% load staticfiles %}
+{% block title %}article column{% endblock %}
+{% block content %}
+<div>
+    <p class="text-right"><!--button class="btn btn-primary">add column</button-->
+        <button id= "add_column" onclick="add_column()" class="btn btn-primary"> add column</button>
+    </p>
+    <table class="table table-hover">
+        <tr>
+            <td>序号</td>
+            <td>栏目名称</td>
+            <td>操作</td>
+        </tr>
+        {% for column in columns %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ column.column }}</td>
+            <td>
+                <a name="edit" href="javascript:" onclick="edit_column(this, {{ column.id }})">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <a name="delete" href="javascript:" onclick="del_column(this, {{ column.id }})">
+                    <span class="glyphicon glyphicon-trash" style="margin-left:20px;"></span>
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <p>还未设置栏目。</p>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

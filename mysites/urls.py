@@ -19,11 +19,13 @@ from django.conf.urls import url,include
 from password_reset.urls import *
 from django.core.mail.backends.console import EmailBackend
 app_name = 'pwd_reset'
+# app_name='article'
 urlpatterns = [
     url(r'admin/', admin.site.urls),
     url(r"^blog/",include('blog.urls',namespace='blog')),
     url(r"^account/",include('account.urls', namespace='account')),
     url(r'^pwd_reset/', include('password_reset.urls'),name ='pwd_reset'),
     #url(r'', include('password_reset.urls'),name ='pwd_reset'), #默认
+    url(r"^article/",include('article.urls',namespace='article')),
 
 ]

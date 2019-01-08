@@ -38,8 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',     #新应用的配置
-    'account',
-    'password_reset'    #第三方密码重置
+    'account',  #用户管理
+    'password_reset',    #第三方密码重置
+    'article',   #文章管理
 ]
 
 
