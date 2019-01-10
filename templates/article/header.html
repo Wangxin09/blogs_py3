@@ -1,29 +1,22 @@
-{% load staticfiles%}
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-</head>
-
-<body>
-    <div class="container">
-        {% include 'article/header.html' %}
-        <div class="col-md-2">
-            {%  include 'article/leftslider.html' %}
+{% load staticfiles %}
+<div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="http://www.google.com">
+                <img width="100px" src="{% static 'images/2019.jpg' %}">
+            </a>
         </div>
-        <div class="col-md-10">
-            {% block content %}
-
-            {% endblock %}
+        <div>
+            <ul class="nav navbar-nav" role="tablist">
+                <li><a href="{% url 'article:article_column' %}">文章管理</a></li>
+{#                <li><a href="{% url 'image:list_images' %}">图片管理</a></li> #}
+{#                <li><a href="{% url 'course:manage_course' %}">课程管理</a></li>#}
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right:10px">
+                <li><a href="{% url 'blog:blog_title' %}">网站首页</a></li>
+                <li><span>{{ user.username }}</li>
+                <li><a href="{% url 'account:user_logout' %}">Logout</a></li>
+            </ul>
         </div>
-            {% include 'footer.html' %}
-
-    </div>
-</body>
-
-
-</html>
+    </nav>
+</div>
