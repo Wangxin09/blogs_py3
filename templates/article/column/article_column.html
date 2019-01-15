@@ -28,7 +28,9 @@
         {% empty %}
         <p>还未设置栏目。</p>
         {% endfor %}
+
     </table>
+
 </div>
 
 <script type="text/javascript" src='{% static "js/jquery.js" %}'></script>
@@ -36,13 +38,13 @@
 {#<script type="text/javascript" src="{% static 'js/cropbox-min.js' %}"></script>#}
 {#<script type="text/javascript" src="{% static 'js/csrf.js' %}"></script>#}
     <script type="text/javascript">
-    function add_column() {
+    function add_column(){
         var index = layer.open({
             type:1,
             skin:'layui-layer-rim',
-            area:['400px','200px'],
+            area:['400px','300px'],
             title:'新增栏目',
-            content:'<div class="text-center" style="margin-top: 100px"><p>请输入新的栏目名称</p><p>{{column_form.column }}</p></div>',
+            content:'<div class="text-center" style="margin-top:60px"><p>请输入新的栏目名称</p><p>{{column_form.column }}</p></div>',
             btn:['确定','取消'],
             yes:function (index,layero) {
                 column_name = $('#id_column').var ();
@@ -60,12 +62,70 @@
 
                     },
                 });
-                alert(column_name);
+                {#alert(column_name);#}
             },
-            btn:function (index,layero) {
+            btn2:function (index,layero) {
                 layer.close(index);
             }
         });
+    }
+
+    function edit_column(the,column_id) {
+        var name = $(the).parent('tr').children('td').eq(1).text();
+        var index = layer.open({
+            type:1,
+            skin:'layui-layer-rim',
+            area:['400px','200px'],
+            title:'新增栏目',
+            content:'<div class="text-center" style="margin-top: 100px"><p>请编辑的栏目名称</p><p><input type="text" id="new_name" value="\'+name+\'"></p></div>',
+            btn:['确定','取消'],
+            yes:function (index,layero) {
+                new_name = $('#new_name').var ();
+                $.ajax({
+                    url:'{% url 'article:rename_article_column' %}',
+                    type:'POST',
+                    data:{'column_id':column_id,'column_name':new_name},
+                    success:function (e) {
+                        if (e=='1'){
+                            parent.location.reload();
+                            layer.msg('GOOD');
+                        }else {
+                            layer.msg('此栏目已有，请更换名称')
+                        }
+
+                    },
+                });
+                {#alert(new_name);#}
+            },
+        })
+    }
+    function del_column(the,column_id) {
+        var name = $(the).parent('tr').children('td').eq(1).text();
+        var index = layer.open({
+            type:1,
+            skin:'layui-layer-rim',
+            area:['400px','200px'],
+            title:'删除栏目',
+            content:'<div class="text-center" style="margin-top:20px"><p>是否确定删除{'+name+'}栏目</p></div>',
+            btn:['确定','取消'],
+            yes:function (index,layero) {
+                $.ajax({
+                    url:'{% url 'article:del_article_column' %}',
+                    type:'POST',
+                    data:{'column_id':column_id},
+                    success:function (e) {
+                        if (e=='1'){
+
+                            parent.location.reload();
+                            layer.msg('has been deleted.');
+                        }else {
+                            layer.msg('删除失败')
+                        }
+
+                    },
+                });
+            },
+        })
     }
     </script>
 {% endblock %}
