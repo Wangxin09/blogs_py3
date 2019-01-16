@@ -6,7 +6,7 @@
 @time: 2019/01/08
 """
 from django.conf.urls import url
-from . import views
+from . import views,list_views
 
 app_name="article"
 urlpatterns  = [
@@ -18,4 +18,6 @@ urlpatterns  = [
     url(r'^article_detail/(?P<id>\d+)/(?P<slug>[-\w]+)/$',views.article_detail,name='article_detail'),
     url(r'^del_article/$',views.del_article,name='del_article'),
     url(r'^redit_article/(?P<article_id>\d+)/$',views.redit_article,name='redit_article'),
+    url(r'^list_article_titles/$',list_views.article_titles,name='article_titles'),
+    url(r'^list_article_detail/(?P<id>\d+)/(?P<slug>[-\w]+)/$',list_views.article_detail,name='list_article_detail'),
 ]
